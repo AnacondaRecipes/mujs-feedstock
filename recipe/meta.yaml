@@ -6,29 +6,37 @@ package:
   version: {{ version }}
 
 source:
-  url: https://mujs.com/downloads/mujs-{{ version }}.tar.gz
+  url: https://mujs.com/downloads/{{ name }}-{{ version }}.tar.gz
   sha256: 506d34882f2620a2fdeb6db63dbb7a8ffd98f417689d8f3c84f2feac275e39a9
   patches:
-    - make.patch
+    - patches/0001-fix-python-alias.patch
+    - patches/make.patch  # [linux]
 
 build:
   number: 0
-  skip: true  # [win]
 
 requirements:
   build:
-    - {{ compiler('c') }}
-    - {{ stdlib("c") }}
-    - make
+    - {{ stdlib('c') }}           # [not win]
+    - {{ compiler('c') }}         # [not win]
+    - {{ compiler('ucrt64_c') }}  # [win]
+    - make                        # [not win]
+    - msys2-make                  # [win]
+    - msys2-coreutils             # [win]
+    - python  # Needed for dynamic python header generation
   host:
-    - readline
-
+    - readline {{ readline }}     # [not win]
+ 
 test:
   commands:
-    - touch test.c && mujs -s test.c
+    - touch test.c && mujs -s test.c  # [not win]
+    - type nul >test.c && mujs -s test.c  # [win]
 
 about:
   home: https://mujs.com
+  license: ISC
+  license_family: Other
+  license_file: COPYING
   summary: 'MuJS is a lightweight Javascript interpreter designed for embedding in other software to extend them with scripting capabilities.'
   description: |
     MuJS was designed with a focus on small size, correctness, and simplicity.
@@ -37,9 +45,6 @@ about:
     possible to use, and is very similar to Lua. There is no need to interact with 
     byzantine C++ template mechanisms, or worry about marking and unmarking garbage 
     collection roots, or wrestle with obscure build systems.
-  license: ISC
-  license_family: Other
-  license_file: COPYING
   doc_url: https://mujs.com/reference.html
   dev_url: https://git.ghostscript.com/?p=mujs.git
 
