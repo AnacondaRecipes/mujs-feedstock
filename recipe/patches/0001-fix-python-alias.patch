@@ -1,0 +1,25 @@
+From 707bc4b910e483f75ff4b7c95c561d180ab5753b Mon Sep 17 00:00:00 2001
+From: Ivan Iziumov <iiziumov@anaconda.com>
+Date: Mon, 5 Jan 2026 11:10:50 +0100
+Subject: [PATCH] fix python alias
+
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index 70e9a9c..1dc6f5d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -78,7 +78,7 @@ SpecialCasing.txt:
+ 	curl -s -o $@ https://www.unicode.org/Public/16.0.0/ucd/SpecialCasing.txt
+ 
+ utfdata.h: genucd.py UnicodeData.txt SpecialCasing.txt
+-	python3 genucd.py UnicodeData.txt SpecialCasing.txt >$@
++	python genucd.py UnicodeData.txt SpecialCasing.txt >$@
+ 
+ build/sanitize/mujs: main.c one.c $(SRCS) $(HDRS)
+ 	@mkdir -p $(@D)
+-- 
+2.50.1 (Apple Git-155)
+
