@@ -13,16 +13,17 @@ source:
     - patches/make.patch  # [linux]
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
-    - {{ stdlib('c') }}           # [not win]
-    - {{ compiler('c') }}         # [not win]
-    - {{ compiler('ucrt64_c') }}  # [win]
-    - make                        # [not win]
-    - msys2-make                  # [win]
-    - msys2-coreutils             # [win]
+    - {{ stdlib('c') }}
+    - {{ compiler('c') }}
+    - make             # [not win]
+    - msys2-make       # [win]
+    - msys2-coreutils  # [win]
+    - cmake            # [win]
+    - ninja-base       # [win]
     - python  # Needed for dynamic python header generation
   host:
     - readline {{ readline }}     # [not win]
