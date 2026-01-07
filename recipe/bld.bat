@@ -1,6 +1,7 @@
 @echo on
 
 copy %RECIPE_DIR%\CMakeLists.txt
+set LIBRARY_PREFIX_SUB=%LIBRARY_PREFIX:\=/%
 
 make prefix="%LIBRARY_PREFIX%" utfdata.h
 if errorlevel 1 exit 1
@@ -8,7 +9,7 @@ if errorlevel 1 exit 1
 make prefix="%LIBRARY_PREFIX%" one.c
 if errorlevel 1 exit 1
 
-make prefix="%LIBRARY_PREFIX%" build/release/mujs.pc
+make prefix="%LIBRARY_PREFIX_SUB%" build/release/mujs.pc
 if errorlevel 1 exit 1
 
 cmake -B build -GNinja . -S %SRC_DIR% ^
