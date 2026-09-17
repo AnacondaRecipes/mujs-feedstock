@@ -10,7 +10,7 @@ source:
   sha256: 956d5a20dd4efe5aa58673558787b9e2539255f9bf62585e90e1921fa040d89d
   patches:
     - patches/0001-fix-python-alias.patch
-    - patches/make.patch  # [linux]
+    - patches/make.patch  # [not win]  # linux+osx: keep conda CFLAGS/LDFLAGS; -L$(prefix)/lib so -lreadline hits conda readline, not macOS libedit
     - patches/windows.patch  # [win]
 
 build:
